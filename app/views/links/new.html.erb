@@ -1,0 +1,14 @@
+<% if @new_link.errors.any? %>
+	<% @new_link.errors.full_messages.each do |msg| %>
+	<li><%= msg %></li>
+	<% end %>
+<% end %>
+
+
+<%= form_for @new_link do |f| %>
+	<div>
+		<%= f.label :url, "Please enter a URL:" %><br />
+		<%= f.text_field :url %>
+	</div>
+	<%= f.submit %>
+<% end %>

@@ -1,0 +1,3 @@
+<h2>Here is your shortened link!</h2>
+<p>Your code is: <strong><%= "#{@new_link.code}" %></strong>. Go to <%= link_to "localhost:3000/#{@new_link.code}", "http://localhost:3000/#{@new_link.code}" %> to visit your URL.<br />
+	<sub><%= link_to "View Preview", "/#{@new_link.code}/preview" %></sub></p>

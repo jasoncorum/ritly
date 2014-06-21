@@ -11,23 +11,41 @@ class LinksController < ApplicationController
 
   def create
   	@new_link = Link.new(link_params)
-    @new_link.code = SecureRandom.urlsafe_base64(8)
+    @new_link.code = rand(10000)
     if @new_link.save
-			redirect_to link_path(@new_link.id)
+			redirect_to @new_link
+      # redirect_to link_path(@new_link.id)
 		else
 			render 'new'
 		end
   end
+
+# Alternate create method for instance where a form is only in use once.
+
+  # def create
+  #   safe_link_params = params.require(:link).permit(:url)
+  #   @new_link = Link.new(safe_url_params)
+  #   @new_link.code = rand(1..10000)
+  #   @new_link.save
+  #   redirect_to @url #[Because we're in Rails, it knows we have a show template because of our resources in the root]
+  # end
+
 
   def show
     @new_link = Link.find params[:id]
   end
 
   def redirectors
-    redirect_to(@new_link.url)
+    if @new_link
+      redirect_to(@new_link.url)
+    else
+      redirect_to root_path
+    end
   end
 
   def preview
+    unless @new_link
+    end
   end
 
   private
@@ -37,7 +55,7 @@ class LinksController < ApplicationController
 	end
 
   def find_by_code
-    @new_link = Link.find_by(:code=>params[:code])
+    @new_link = Link.find_by code: params[:code]
   end
 
 end

@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
+  
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  root 'links#index'
-  resources :links
+  root 'pages#index'
+  resources :links, only: [:new, :create, :show]
 
-
+  # :code is a wildcard that can be anything not in the routes.rb file
   get '/:code', to: 'links#redirectors'
   get '/:code/preview', to: 'links#preview'
 

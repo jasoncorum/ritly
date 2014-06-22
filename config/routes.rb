@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   root 'pages#index'
-  resources :links, only: [:new, :create, :show]
+  resources :links #, only: [:new, :create, :show, :index, :edit]
 
   # :code is a wildcard that can be anything not in the routes.rb file
   get '/:code', to: 'links#redirectors'

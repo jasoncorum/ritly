@@ -1,20 +1,26 @@
 class LinksController < ApplicationController
-  
+    
   before_action :find_by_code, only: [:redirectors, :preview]
+  before_action :authenticate_user!
+  before_action :set_link, only: [:edit, :destroy]
 
   def index
+    @user_links = current_user.links.all
   end	
 
   def new
-  	@new_link = Link.new
+  	@link = current_user.links.build #Link.new
+  end
+
+  def edit
   end
 
   def create
-  	@new_link = Link.new(link_params)
-    @new_link.code = rand(10000)
-    if @new_link.save
-			redirect_to @new_link
-      # redirect_to link_path(@new_link.id)
+  	@link = current_user.links.build(link_params)
+    @link.code = rand(10000)
+    if @link.save
+			redirect_to @link
+      # redirect_to link_path(@link.id)
 		else
 			render 'new'
 		end
@@ -24,27 +30,32 @@ class LinksController < ApplicationController
 
   # def create
   #   safe_link_params = params.require(:link).permit(:url)
-  #   @new_link = Link.new(safe_url_params)
-  #   @new_link.code = rand(1..10000)
-  #   @new_link.save
+  #   @link = Link.new(safe_url_params)
+  #   @link.code = rand(1..10000)
+  #   @link.save
   #   redirect_to @url #[Because we're in Rails, it knows we have a show template because of our resources in the root]
   # end
 
 
   def show
-    @new_link = Link.find params[:id]
+    @link = Link.find params[:id]
+  end
+
+  def destroy
+    @link.destroy
+    redirect_to links_url
   end
 
   def redirectors
-    if @new_link
-      redirect_to(@new_link.url)
+    if @link
+      redirect_to(@link.url)
     else
       redirect_to root_path
     end
   end
 
   def preview
-    unless @new_link
+    unless @link
     end
   end
 
@@ -54,8 +65,13 @@ class LinksController < ApplicationController
 		params.require(:link).permit(:url)
 	end
 
+  def set_link
+    @link = current_user.links.find_by(id: params[:id])
+    redirect_to root_path, notice: "Not authorized to access section of Ritly." if @link.nil?
+  end
+
   def find_by_code
-    @new_link = Link.find_by code: params[:code]
+    @link = Link.find_by code: params[:code]
   end
 
 end

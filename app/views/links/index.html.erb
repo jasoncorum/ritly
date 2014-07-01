@@ -1,14 +1,10 @@
-<h2>Welcome to Ritly</h2>
-
-<p><%= link_to "Add Link", new_link_path %></p>
-
-
 <hr />
 
 <% @user_links.each do |link| %>
 <p><strong><%= link.url %></strong></br>
+Ritly URL: <%= link_to "http://localhost:3000/#{link.code}", "http://localhost:3000/#{link.code}" %></br>
 Link Code: <%= link.code %>, User Email: <%= link.user.email if link.user %></br>
-<sub><%= link_to "View Preview", "/#{link.code}/preview" %> | <%= link_to "Edit", edit_link_path(link) %> | <%= link_to "Delete", link_path(link),
+<sub><%= link_to "Edit", edit_link_path(link) %> | <%= link_to "Delete", link_path(link),
                     method: :delete, data: { confirm: 'Are you sure you want to delete this link?' }  %></sub>
 </p>
 

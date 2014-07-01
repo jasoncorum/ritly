@@ -1,7 +1,6 @@
-<h2>Here is your shortened link for:<br />
-<%= link_to @link.url, @link.url %></h2>
+<p><strong>Here is your shortened link for:</strong><br />
+<%= link_to @link.url, @link.url %></p>
 
 <p>Your link code is: <strong><%= "#{@link.code}" %></strong>. </p>
 
-<p>You can now use: <%= link_to "http://localhost:3000/#{@link.code}", "http://localhost:3000/#{@link.code}" %><br />	
-<sub><%= link_to "View Preview", "/#{@link.code}/preview" %></sub></p>
+<p>You can now use: <%= link_to "http://localhost:3000/#{@link.code}", "http://localhost:3000/#{@link.code}" %></p>

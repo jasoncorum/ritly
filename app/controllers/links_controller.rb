@@ -2,7 +2,7 @@ class LinksController < ApplicationController
     
   before_action :find_by_code, only: [:redirectors, :preview]
   before_action :authenticate_user!
-  before_action :set_link, only: [:edit, :destroy]
+  before_action :set_link, only: [:edit, :destroy, :show]
 
   def index
     @user_links = current_user.links.all
@@ -67,7 +67,7 @@ class LinksController < ApplicationController
 
   def set_link
     @link = current_user.links.find_by(id: params[:id])
-    redirect_to root_path, notice: "Not authorized to access section of Ritly." if @link.nil?
+    redirect_to root_path, notice: "Not authorized to access this section of Ritly." if @link.nil?
   end
 
   def find_by_code
